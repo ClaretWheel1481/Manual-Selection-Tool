@@ -12,20 +12,21 @@ my_headers = [       #浏览器User-Agent
 ]
 
 root=tk.Tk()
-root.title('手动选品利润率计算器 v0.6b ')
+root.title('手动选品利润率计算器 v0.8 ')
 root.geometry('500x200+700+430')
 root.resizable(width=False,height=False)
+
 
 w=tk.Label(root,text='当前美元汇率',height=2,font="微软雅黑")
 w.place(x=10,y=4)
 gx=tk.Label(root,text='(每次启动更新)',height=1,fg='red')
 gx.place(x=175,y=17)
 a=tk.Label(root,text='输入余额充值的折扣数',height=2,font="微软雅黑")
-a.place(x=10,y=49)
+a.place(x=10,y=45)
 b=tk.Label(root,text='输入Buff售出价格 ($)',height=2,font="微软雅黑")
-b.place(x=10,y=100)
+b.place(x=10,y=95)
 c=tk.Label(root,text='输入Steam购入价格($)',height=2,font="微软雅黑")
-c.place(x=10,y=150)
+c.place(x=10,y=145)
 d=tk.Label(root,text='100$预估税后利润($)',height=1,font="微软雅黑")
 d.place(x=310,y=1)
 d=tk.Label(root,text='预估利润率',height=1,font="微软雅黑")
@@ -44,11 +45,12 @@ hl=tk.Text(root,width=6,height=1,state='normal',cursor='exchange')
 hl.insert('insert',FINAL)
 hl.configure(state='disable')
 hl.place(x=120,y=20)
-zk=tk.Text(root,width=10,height=2)
+zk=tk.Entry(root,width=10)
+zk.focus_set()
 zk.place(x=180,y=60)
-buff=tk.Text(root,width=10,height=2)
+buff=tk.Entry(root,width=10)
 buff.place(x=180,y=110)
-steam=tk.Text(root,width=10,height=2)
+steam=tk.Entry(root,width=10)
 steam.place(x=180,y=160)
 yj=tk.Text(root,width=10,height=2,cursor='heart')
 yj.configure(state='disable')
@@ -57,16 +59,16 @@ lr=tk.Text(root,width=10,height=2,cursor='heart')
 lr.configure(state='disable')
 lr.place(x=350,y=90)
 
-def onClick1():    #字符串转换成浮点型
+def exchanges():    #字符串转换成浮点型
     global wybuff
     global zhekou
     global steamd
 
-    zhekou=float(str.strip(zk.get(1.0,"end")))
-    wybuff=float(str.strip(buff.get(1.0,"end")))
-    steamd=float(str.strip(steam.get(1.0,"end")))
+    zhekou=float(zk.get())
+    wybuff=float(buff.get())
+    steamd=float(steam.get())
     
-def onClick2():  #汇率计算
+def caculate():  #汇率计算
     global PP
     global zkshu
     global FF
@@ -89,7 +91,7 @@ def onClick2():  #汇率计算
     summ=round(summ,2)
     BIE=["{:.2%}".format(FIE/100)]
 
-def onClick3():     #文本框样式修改
+def exchanges2():     #文本框样式修改
     yj.configure(state='normal')
     lr.configure(state='normal')
     yj.delete(1.0,'end')
@@ -103,8 +105,9 @@ def onClick3():     #文本框样式修改
     yj.configure(state='disable')
     lr.configure(state='disable')
 
-button=tk.Button(root,text="计算",command=lambda:[onClick1(),onClick2(),onClick3()])
+button=tk.Button(root,text="计算",command=lambda:[exchanges(),caculate(),exchanges2()])
 button.place(x=370,y=160)
+
 
 root.mainloop()
 
