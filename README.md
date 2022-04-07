@@ -1,6 +1,6 @@
 # Manul-Selection-Tool-Python-Version
 ###
-针对CSGO搬砖手动选择商品的利润率计算器(USD TO CNY),由Python编写。
+针对Steam饰品搬砖手动选择商品的利润率计算器(USD TO CNY),由Python编写。
 ###
 (对Python的知识几乎为0，故大部分代码十分臃肿,后续将不断学习优化)
 ###
