@@ -3,31 +3,27 @@ import re
 import urllib.request
 import random
 import webbrowser
+import json
 
-
-#捕获API 403修复(添加User-Agent)
-UAS = [
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:99.0) Gecko/20100101 Firefox/99.0",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:98.0) Gecko/20100101 Firefox/98.0",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.60 Safari/537.36 Edg/100.0.1185.29",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.61 Safari/537.36 Edg/94.0.992.31",
-    "Mozilla/5.0 (Linux; HarmonyOS; HMSCore 6.4.0.312) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.105 HuaweiBrowser/12.0.5.301 Mobile Safari/537.36",
-    "Mozilla/5.0 (iPhone; CPU iPhone OS 15_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Mobile/15E148 Safari/604"
-]
 
 root=tk.Tk()
 root.title('Manual Selection Tool')
 root.geometry('425x190+750+430')
 root.resizable(width=False,height=False)
 
+#汇率API抓取并转换
+request=urllib.request.Request('https://api.it120.cc/gooking/forex/rate?fromCode=CNY&toCode=USD')
+response=urllib.request.urlopen(request)
+USDCNY=json.loads(response.read())
+exchangerate=USDCNY['data']['rate']
 
-#单击"Version"后打开浏览器跳转至Github项目页
+#单击"Version"打开浏览器至Github项目页
 def openurl(event):
     webbrowser.open("https://github.com/CrystalEggs/Manual-Selection-Tool-Python-Version",
                     new = 0)
 
 link = tk.Label(root,
-                text='Version: 0.9.2',
+                text='Version: 0.9.4',
                 height=2,
                 font=("Simsum",9,'underline','bold'),
                 fg="royalblue",
@@ -36,20 +32,20 @@ link.place(x=0,y=166)
 link.bind("<Button-1>",openurl)
 
 w=tk.Label(root,
-           text='当前美元汇率：',
+           text='实时美元汇率：',
            height=1,
            font=("Microsoft YaHei",12))
 w.place(x=10,y=10)
 
 gx=tk.Label(root,
-            text='(启动时更新)',
+            text='(启动更新)',
             height=1,
             fg='red',
             font=("Simsum",10,'bold'))
 gx.place(x=165,y=16)
 
 a=tk.Label(root,
-           text='余额充值折扣数：',
+           text='余额充值折扣：',
            height=2,
            font=("Microsoft YaHei",12))
 a.place(x=10,y=42)
@@ -78,17 +74,6 @@ d=tk.Label(root,
            font=("Microsoft YaHei",12))
 d.place(x=300,y=71)
 
-#汇率API抓取并转换
-request=urllib.request.Request('http://webforex.hermes.hexun.com/forex/quotelist?code=FOREXUSDCNY&column=Price')
-request.add_header('User-Agent',
-                   random.choice(UAS))
-response=urllib.request.urlopen(request)
-USDCNY=response.read()
-USDCNY=USDCNY.decode('utf-8')
-USDCNY=re.sub("\D","",USDCNY)
-exchangerate=USDCNY
-exchangerate=float(exchangerate) / 10000
-
 hl=tk.Text(root,
            width=6,
            height=1,
@@ -102,7 +87,7 @@ hl.place(x=120,y=18)
 zk=tk.Entry(root,
             width=10)
 zk.focus_set()
-zk.place(x=142,y=59)
+zk.place(x=129,y=59)
 
 buff=tk.Entry(root,
               width=10)
