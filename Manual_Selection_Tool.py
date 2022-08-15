@@ -3,17 +3,25 @@ import re
 import urllib.request
 import webbrowser
 import json
-
+from tkinter import messagebox 
 
 root=tk.Tk()
-root.title('Manual Selection Tool')
-root.geometry('420x190+750+430')
+root.title('手动选品利润计算工具')
+root.geometry('420x190')
 root.resizable(width=False,height=False)
+root.eval('tk::PlaceWindow %s center' % root.winfo_toplevel())
+root.withdraw()
+if messagebox.askyesno('提示','该应用所计算的任何数据并非100%精准，造成任何财产损失请自行承，请确认是否继续使用？') == True:
+    root.deiconify()
+else:
+    root.destroy()
 
 #汇率API抓取并转换
-request=urllib.request.Request('https://api.it120.cc/gooking/forex/rate?fromCode=CNY&toCode=USD')
+#API备用：
+# https://api.it120.cc/gooking/forex/rate?fromCode=CNY&toCode=USD
+request=urllib.request.Request('https://api.exchangerate-api.com/v4/latest/USD')
 response=urllib.request.urlopen(request)
-exchangerate=json.loads(response.read())['data']['rate']
+exchangerate=json.loads(response.read())['rates']['CNY']
 
 #单击"Version"打开浏览器至Github项目页
 def openurl(event):
@@ -21,7 +29,7 @@ def openurl(event):
                     new = 0)
 
 link = tk.Label(root,
-                text='Version: 0.9.4',
+                text='Version: 0.9.5',
                 height=2,
                 font=("Simsum",9,'underline','bold'),
                 fg="royalblue",
@@ -36,7 +44,7 @@ w=tk.Label(root,
 w.place(x=10,y=8)
 
 gx=tk.Label(root,
-            text='(启动更新)',
+            text='(启动即更新)',
             height=1,
             fg='red',
             font=("Simsum",10,'bold'))
