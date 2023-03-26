@@ -1,13 +1,11 @@
 import tkinter as tk
-import re
-import urllib.request
 import webbrowser
 import json
 from tkinter import messagebox
 from urllib.request import urlopen
 
 root=tk.Tk()
-root.title('手动选品利润计算工具')
+root.title('Steam搬砖手动选品利润计算工具')
 root.geometry('420x190')
 root.resizable(width=False,height=False)
 root.eval('tk::PlaceWindow %s center' % root.winfo_toplevel())
@@ -27,7 +25,7 @@ if messagebox.askyesno('提示','该应用所计算的任何数据并非100%精�
                         new = 0)
 
     link = tk.Label(root,
-                    text='Version: 0.9.7',
+                    text='Version: 0.9.8',
                     height=2,
                     font=("Simsum",9,'underline','bold'),
                     fg="royalblue",
@@ -55,13 +53,13 @@ if messagebox.askyesno('提示','该应用所计算的任何数据并非100%精�
     a.place(x=10,y=40)
 
     b=tk.Label(root,
-               text='Buff售出价格($)：',
+               text='Buff售出价格：',
                height=2,
                font=("Microsoft YaHei",12))
     b.place(x=10,y=86)
 
     c=tk.Label(root,
-               text='Steam购入价格($)：',
+               text='Steam购入价格：',
                height=1,
                font=("Microsoft YaHei",12))
     c.place(x=10,y=140)
@@ -79,18 +77,18 @@ if messagebox.askyesno('提示','该应用所计算的任何数据并非100%精�
     d.place(x=315,y=69)
     
     wn=tk.Label(root,
-               text='例如7折 “0.700”',
+               text='7折 输入“0.7”',
                height=1,
                fg='blue',
                font=("Microsoft YaHei",9))
     wn.place(x=14,y=75)
 
-    wn2=tk.Label(root,
-               text='请换算为美元后填写',
-               height=1,
-               fg='blue',
-               font=("Microsoft YaHei",9))
-    wn2.place(x=14,y=121)
+    # wn2=tk.Label(root,
+    #            text='转换为美元后填写',
+    #            height=1,
+    #            fg='blue',
+    #            font=("Microsoft YaHei",9))
+    # wn2.place(x=14,y=121)
 
     hl=tk.Text(root,
                width=6,
@@ -109,11 +107,11 @@ if messagebox.askyesno('提示','该应用所计算的任何数据并非100%精�
 
     buff=tk.Entry(root,
                   width=10)
-    buff.place(x=145,y=102)
+    buff.place(x=129,y=102)
 
     steam=tk.Entry(root,
                    width=10)
-    steam.place(x=160,y=147)
+    steam.place(x=135,y=147)
 
     yj=tk.Text(root,
                width=10,
@@ -133,23 +131,23 @@ if messagebox.askyesno('提示','该应用所计算的任何数据并非100%精�
     
 #汇率计算
     def caculate():
-        global huilv
+        global EXCRate
         global zkshu
         global profit
         global container
         global profitmargin
         global wybuffprice
-        global zhekou
+        global DisCounts
         global steamprice
 
-        zhekou=float(zk.get())
+        DisCounts=float(zk.get())
         wybuffprice=float(buff.get())
         steamprice=float(steam.get())
-        huilv=int(exchangerate) * 100
+        EXCRate=int(exchangerate) * 100
         
-        zkshu=huilv * zhekou
-        huilv=huilv / steamprice * wybuffprice - zkshu
-        profit=huilv - huilv * 0.035
+        zkshu=EXCRate * DisCounts
+        EXCRate=EXCRate / (steamprice / EXCRate) * (wybuffprice/EXCRate) - zkshu
+        profit=EXCRate - EXCRate * 0.035
         container=round(profit / zkshu * 100,2)
         profit=round(profit,1)
         profitmargin=["{:.2%}".format(container/100)]
