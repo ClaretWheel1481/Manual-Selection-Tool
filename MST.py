@@ -30,7 +30,7 @@ if messagebox.askyesno('警告','该应用所计算的任何数据并非100%精�
                     height=2,
                     font=("Simsum",9,'underline','bold'),
                     fg="royalblue",
-                    cursor='hand2')
+                    cursor='hand1')
     link.place(x=0,y=165)
     link.bind("<Button-1>",openurl)
 
