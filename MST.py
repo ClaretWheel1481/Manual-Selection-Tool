@@ -6,12 +6,14 @@ from urllib.request import urlopen
 
 root=tk.Tk()
 root.title('Steam搬砖手动选品利润计算工具')
-root.geometry('420x190')
+screenwidth = root.winfo_screenwidth()
+screenheight = root.winfo_screenheight()
+root.geometry('%dx%d+%d+%d'%(420,190,(screenwidth-420)/2,(screenheight-190)/2))
 root.resizable(width=False,height=False)
 root.eval('tk::PlaceWindow %s center' % root.winfo_toplevel())
 root.withdraw()
 
-if messagebox.askyesno('提示','该应用所计算的任何数据并非100%精准，造成任何财产损失请自行承，请确认是否继续使用？') == True:
+if messagebox.askyesno('警告','该应用所计算的任何数据并非100%精准，造成任何财产损失请自行承，请确认是否继续使用？') == True:
 #汇率API抓取并转换
 #API备用：
 # https://api.it120.cc/gooking/forex/rate?fromCode=CNY&toCode=USD
@@ -21,11 +23,10 @@ if messagebox.askyesno('提示','该应用所计算的任何数据并非100%精�
 
 #单击"Version"打开浏览器至Github项目页
     def openurl(event):
-        webbrowser.open("https://github.com/ClaretWheel1481/Manual-Selection-Tool-Python-Version",
-                        new = 0)
+        webbrowser.open("https://github.com/ClaretWheel1481/Manual-Selection-Tool",new = 0)
 
     link = tk.Label(root,
-                    text='Version: 0.9.8',
+                    text='Version: 0.9.9',
                     height=2,
                     font=("Simsum",9,'underline','bold'),
                     fg="royalblue",
@@ -82,13 +83,6 @@ if messagebox.askyesno('提示','该应用所计算的任何数据并非100%精�
                fg='blue',
                font=("Microsoft YaHei",9))
     wn.place(x=14,y=75)
-
-    # wn2=tk.Label(root,
-    #            text='转换为美元后填写',
-    #            height=1,
-    #            fg='blue',
-    #            font=("Microsoft YaHei",9))
-    # wn2.place(x=14,y=121)
 
     hl=tk.Text(root,
                width=6,
