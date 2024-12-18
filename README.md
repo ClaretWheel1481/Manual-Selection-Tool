@@ -1,4 +1,4 @@
-# Steam搬砖手动选品利润计算工具
+# Steam搬砖手动选品利润计算工具（End of Life）
 该应用以Python GUI Tkinter为基础，轻便开源，仅提供计算“Steam饰品搬砖商品选择上的利润”,不涉及任何利益！
 
 ####
